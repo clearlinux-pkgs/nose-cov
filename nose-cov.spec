@@ -4,13 +4,15 @@
 #
 Name     : nose-cov
 Version  : 1.6
-Release  : 8
+Release  : 9
 URL      : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Source0  : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Summary  : nose plugin for coverage reporting, including subprocesses and multiprocessing
 Group    : Development/Tools
 License  : MIT
 Requires: nose-cov-python
+BuildRequires : cov-core
+BuildRequires : nose
 BuildRequires : pbr
 BuildRequires : pip
 BuildRequires : python-dev
@@ -34,13 +36,16 @@ python components for the nose-cov package.
 %setup -q -n nose-cov-1.6
 
 %build
+export LANG=C
+export SOURCE_DATE_EPOCH=1484554967
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %install
+export SOURCE_DATE_EPOCH=1484554967
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot}
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 
 %files
 %defattr(-,root,root,-)
