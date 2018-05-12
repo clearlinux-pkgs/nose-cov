@@ -4,13 +4,16 @@
 #
 Name     : nose-cov
 Version  : 1.6
-Release  : 9
+Release  : 10
 URL      : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Source0  : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Summary  : nose plugin for coverage reporting, including subprocesses and multiprocessing
 Group    : Development/Tools
 License  : MIT
+Requires: nose-cov-python3
 Requires: nose-cov-python
+Requires: cov-core
+Requires: nose
 BuildRequires : cov-core
 BuildRequires : nose
 BuildRequires : pbr
@@ -20,36 +23,59 @@ BuildRequires : python3-dev
 BuildRequires : setuptools
 
 %description
-nose-cov
 ========
-This plugin produces coverage reports.  It also supports coverage of subprocesses.
+        
+        This plugin produces coverage reports.  It also supports coverage of subprocesses.
+        
+        All features offered by the coverage package should be available, either through nose-cov or
+        through coverage's config file.
+        
+        
+        Installation
+        ------------
 
 %package python
 Summary: python components for the nose-cov package.
 Group: Default
+Requires: nose-cov-python3
 
 %description python
 python components for the nose-cov package.
+
+
+%package python3
+Summary: python3 components for the nose-cov package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the nose-cov package.
 
 
 %prep
 %setup -q -n nose-cov-1.6
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1484554967
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1526164068
 python3 setup.py build -b py3
 
 %install
-export SOURCE_DATE_EPOCH=1484554967
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
+echo ----[ mark ]----
+cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
+echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*
