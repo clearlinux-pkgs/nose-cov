@@ -4,7 +4,7 @@
 #
 Name     : nose-cov
 Version  : 1.6
-Release  : 14
+Release  : 15
 URL      : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Source0  : https://pypi.python.org/packages/source/n/nose-cov/nose-cov-1.6.tar.gz
 Summary  : nose plugin for coverage reporting, including subprocesses and multiprocessing
